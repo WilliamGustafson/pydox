@@ -724,7 +724,7 @@ def fullargspec_str(spec):
 	#TODO varargs, varkwargs, kwonlyargs,kwonlydefaults,annotations
 
 
-def main(module='',title='',author='',date=False, imp=tuple(),impall=tuple(),whitelist=tuple(),outdir='.',preamble='',packages=tuple(),post='',compile=False):
+def main(module='',title='',author='',date=False, subtitle='',imp=tuple(),impall=tuple(),whitelist=tuple(),outdir='.',preamble='',packages=tuple(),post='',compile=False):
 
 	exec_import = imp if isinstance(imp,tuple) else (imp,)
 	if exec_import:
@@ -802,7 +802,11 @@ def main(module='',title='',author='',date=False, imp=tuple(),impall=tuple(),whi
 		if pkgs:
 			file.write('\\usepackage{'+'}\n\\usepackage{'.join(pkgs.split(','))+'}\n')
 		file.write('\\begin{document}\n')
-		if title: file.write(f'\\title{{{title}}}\n')
+		if title or subtitle:
+			file.write(f'\\title{{{title}')
+			if subtitle:
+				file.write(f'\\\\\\large {subtitle}')
+			file.write('}')
 		if author: file.write(f'\\author{{{author}}}\n')
 		if date=='today': file.write('\\date{\\today}\n')
 		elif date: file.write(f'\\date{{{date}}}\n')
